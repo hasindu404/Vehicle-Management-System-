@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "api/v1/vehicle")
 @CrossOrigin
@@ -18,6 +20,7 @@ public class VehicleController {
     private VehicleService vehicleService;
     @Autowired
     private ResponseDTO responseDTO;
+
 
     @PostMapping("/saveVehicle")
     public ResponseEntity saveVehicle(@RequestBody VehicleDTO vehicleDTO) {
@@ -48,4 +51,30 @@ public class VehicleController {
         }
     }
 
+    @PutMapping("/updateVehicle")
+    public ResponseEntity updateVehicle(@RequestBody VehicleDTO vehicleDTO) {
+            String vres = vehicleService.updateVehicle(vehicleDTO);
+            try {
+                if (vres.equals("00")) {
+                    responseDTO.setCode(VarList.RSP_SUCCESS);
+                    responseDTO.setMessage("Vehicle updated successfully");
+                    responseDTO.setContent(vehicleDTO);
+                    return new ResponseEntity(vehicleDTO, HttpStatus.ACCEPTED);
+                } else {
+                    responseDTO.setCode(VarList.RSP_ERROR);
+                    responseDTO.setMessage("Error occured");
+                    responseDTO.setContent(null);
+                    return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+                }
+            } catch (Exception e) {
+                responseDTO.setCode(VarList.RSP_ERROR);
+                responseDTO.setMessage(e.getMessage());
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+    }
+    @DeleteMapping("/deleteVehicle")
+    public Boolean deleteVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        return vehicleService.deleteVehicle(vehicleDTO);
+    }
 }

@@ -4,6 +4,7 @@ import VSM_System.Response.LoginResponse;
 import VSM_System.Util.VarList;
 import VSM_System.dto.LoginDTO;
 import VSM_System.dto.UserDTO;
+import VSM_System.dto.VehicleDTO;
 import VSM_System.entity.User;
 import VSM_System.repo.UserRepo;
 import jakarta.transaction.Transactional;
@@ -23,6 +24,8 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
+
+
     public String saveUser(UserDTO userDTO){
         if(userRepo.existsById(userDTO.getUserID())){
             return VarList.RSP_DUPLICATED;
@@ -30,6 +33,16 @@ public class UserService {
             userRepo.save(modelMapper.map(userDTO, User.class));
             return VarList.RSP_SUCCESS;
         }
+    }
+
+    public String updateUser(UserDTO userDTO){
+        userRepo.save(modelMapper.map(userDTO, User.class));
+        return VarList.RSP_SUCCESS;
+    }
+
+    public boolean deleteUser(UserDTO userDTO){
+        userRepo.delete(modelMapper.map(userDTO, User.class));
+        return true;
     }
 
     public LoginResponse loginUser(LoginDTO loginDTO) {
