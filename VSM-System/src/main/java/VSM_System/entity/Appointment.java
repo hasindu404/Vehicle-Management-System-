@@ -6,16 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Time;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Feedback {
+
+public class Appointment {
     @Id
-    public String feedback_id;
+    public String appointment_Id;
     public String userID;
-    public Date submit_date;
-    public String feedback_description;
+    public String name;
+    public String email;
+    public Time time;
+    public String service_type;
 }

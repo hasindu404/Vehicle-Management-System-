@@ -3,7 +3,6 @@ package VSM_System.Controller;
 import VSM_System.Util.VarList;
 import VSM_System.dto.FeedbackDTO;
 import VSM_System.dto.ResponseDTO;
-import VSM_System.entity.Feedback;
 import VSM_System.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class FeedbackController {
                 return new ResponseEntity(feedbackDTO, HttpStatus.BAD_REQUEST);
             }else {
                 responseDTO.setCode(VarList.RSP_ERROR);
-                responseDTO.setMessage("Error occured");
+                responseDTO.setMessage("Error Occurred");
                 responseDTO.setContent(null);
                 return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
             }

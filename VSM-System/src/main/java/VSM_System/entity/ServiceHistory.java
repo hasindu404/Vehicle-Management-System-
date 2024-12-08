@@ -16,10 +16,10 @@ import java.util.Date;
 
 public class ServiceHistory {
     @Id
-    private String service_id;
-    private String vehicle_id;
-    private String service_type;
-    private Date date;
-    private String description;
+    public String service_id;
+    public String vehicle_id;
+    public String service_type;
+    public Date date;
+    public String description;
 
 }
