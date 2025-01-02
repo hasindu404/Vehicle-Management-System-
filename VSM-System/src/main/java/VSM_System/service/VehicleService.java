@@ -1,7 +1,6 @@
 package VSM_System.service;
 
 import VSM_System.Util.VarList;
-import VSM_System.dto.UserDTO;
 import VSM_System.dto.VehicleDTO;
 import VSM_System.entity.Vehicle;
 import VSM_System.repo.VehicleRepo;
@@ -23,7 +22,7 @@ public class VehicleService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<VehicleDTO> getVehicle(VehicleDTO vehicleDTO) {
+    public List<VehicleDTO> getAllVehicle() {
         List<Vehicle> vehicleList = vehicleRepo.findAll();
         return modelMapper.map(vehicleList,new TypeToken<List<VehicleDTO>>(){}.getType());
     }
@@ -46,4 +45,12 @@ public class VehicleService {
         vehicleRepo.delete(modelMapper.map(vehicleDTO , Vehicle.class));
         return true;
     }
+    public VehicleDTO getVehicleById(String vehicle_id) {
+        Vehicle vehicle = vehicleRepo.findById(vehicle_id).orElse(null);
+        if (vehicle != null) {
+            return modelMapper.map(vehicle, VehicleDTO.class);
+        }
+        return null;
+    }
+
 }
