@@ -4,14 +4,15 @@ import VSM_System.Response.LoginResponse;
 import VSM_System.Util.VarList;
 import VSM_System.dto.LoginDTO;
 import VSM_System.dto.UserDTO;
-import VSM_System.dto.VehicleDTO;
 import VSM_System.entity.User;
 import VSM_System.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -24,7 +25,10 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-
+    public List<UserDTO> getAllUsers() {
+        List<User> UserList = userRepo.findAll();
+        return modelMapper.map(UserList,new TypeToken<List<UserDTO>>(){}.getType());
+    }
 
     public String saveUser(UserDTO userDTO){
         if(userRepo.existsById(userDTO.getUserID())){
@@ -64,5 +68,12 @@ public class UserService {
         }else {
             return new LoginResponse("Email is not Match",false);
         }
+    }
+    public UserDTO getUserById(String userID) {
+        User user = userRepo.findById(userID).orElse(null);
+        if (user != null) {
+            return modelMapper.map(user, UserDTO.class);
+        }
+        return null;
     }
 }
